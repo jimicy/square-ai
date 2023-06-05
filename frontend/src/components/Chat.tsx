@@ -8,18 +8,40 @@ import { RefObject } from "react";
 import IconButton from "@mui/material/IconButton";
 import { useCopyToClipboard } from "usehooks-ts";
 import ImageCard from "./ImageCard";
-import { Button, Grid, Typography } from "@mui/material";
-import { API_ADDRESS, MessageDict, PUBLIC_URL } from "../lib/type";
+import {
+  Button,
+  Grid,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Typography,
+} from "@mui/material";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+} from "chart.js";
+import { Bar } from "react-chartjs-2";
+import { API_ADDRESS, Customer, MessageDict, PUBLIC_URL } from "../lib/type";
 
-function CatalogMessage(props: {
-  text: string;
-  role: string;
-  type: string;
-  data?: any;
-  showLoader?: boolean;
-  selectedLocale: string;
-  generateProduct?: () => void;
-}) {
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+);
+
+function CatalogMessage(props: { data: any; generateProduct?: () => void }) {
   return (
     <>
       <div style={{ marginBottom: 20 }}>
@@ -52,65 +74,144 @@ function CatalogMessage(props: {
       </Grid>
     </>
   );
-  // return (
-  //   <>
-  //     <h1>Shipping Rate Estimate</h1>
-  //     <TableContainer component={Paper}>
-  //       <Table sx={{ minWidth: 650 }} aria-label="simple table">
-  //         <TableHead>
-  //           <TableRow>
-  //             <TableCell>Service Type</TableCell>
-  //             <TableCell align="right">Currency&nbsp;</TableCell>
-  //             <TableCell align="right">Amount&nbsp;</TableCell>
-  //             <TableCell align="right">Package Type&nbsp;</TableCell>
-  //             <TableCell align="right">Trackable&nbsp;</TableCell>
-  //             <TableCell align="right">Delivery Days&nbsp;</TableCell>
-  //             <TableCell align="right">Estimated Delivery Date&nbsp;</TableCell>
-  //           </TableRow>
-  //         </TableHead>
-  //         <TableBody>
-  //           {props.data.map((item: any, index: number) => (
-  //             <TableRow
-  //               key={index}
-  //               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-  //             >
-  //               <TableCell component="th" scope="row">
-  //                 {item["item_data"]["name"]}
-  //               </TableCell>
-  //               <TableCell align="right">
-  //                 {item["item_data"]["description"]}
-  //               </TableCell>
-  //               <TableCell align="right">
-  //                 <img src={item["item_data"]["image_url"]} alt="product" />
-  //               </TableCell>
-  //               <TableCell align="right">
-  //                 {item["item_data"]["description"]}
-  //               </TableCell>
-  //               <TableCell align="right">
-  //                 {item["item_data"]["description"]}
-  //               </TableCell>
-  //               <TableCell align="right">
-  //                 {item["item_data"]["description"]}
-  //               </TableCell>
-  //               <TableCell align="right">
-  //                 {item["item_data"]["description"]}
-  //               </TableCell>
-  //             </TableRow>
-  //           ))}
-  //         </TableBody>
-  //       </Table>
-  //     </TableContainer>
-  //   </>
-  // );
+}
+
+function StoreCustomersMessage(props: {
+  data: any;
+  runCustomerAnalysis: () => void;
+}) {
+  const labels = [];
+  const barValues = [];
+  for (const ageBucket of [
+    "<18",
+    "18-24",
+    "25-34",
+    "35-44",
+    "45-54",
+    "55-64",
+    "65+",
+  ]) {
+    labels.push(ageBucket);
+    barValues.push(props.data.ageBuckets[ageBucket]);
+  }
+
+  const options = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: "top" as const,
+      },
+      title: {
+        display: true,
+        text: "Customers By Age Buckets",
+      },
+    },
+  };
+
+  const barData = {
+    labels: labels,
+    datasets: [
+      {
+        label: "Total",
+        data: barValues,
+        borderColor: "#e0bc53",
+        backgroundColor: "#ffd761",
+        borderWidth: 2,
+        borderRadius: 10,
+        borderSkipped: false,
+      },
+    ],
+  };
+
+  return (
+    <>
+      <Typography variant="h3" className="heading">
+        Store Customers
+      </Typography>
+      <Button
+        className="generateProduct"
+        variant="contained"
+        onClick={props.runCustomerAnalysis}
+        style={{ width: 300, marginBottom: 15 }}
+      >
+        Run Customer Analysis
+      </Button>
+      <div
+        className="chart-container"
+        style={{ position: "relative", height: "40vh", width: "80vw" }}
+      >
+        <Bar data={barData} options={options} />
+      </div>
+      <Typography variant="body2" color="text.secondary">
+        Preview of the store customers data. Limited to only showing 20
+        customers.
+      </Typography>
+      <TableContainer
+        component={Paper}
+        style={{
+          minWidth: 650,
+          maxWidth: 1400,
+          width: "100%",
+          maxHeight: 600,
+          overflow: "scroll",
+        }}
+      >
+        <Table aria-label="square store customers table">
+          <TableHead>
+            <TableRow>
+              <TableCell>Given name</TableCell>
+              <TableCell align="right">Family name&nbsp;</TableCell>
+              <TableCell align="right">Birthday&nbsp;</TableCell>
+              <TableCell align="right">Email&nbsp;</TableCell>
+              <TableCell align="right">Created At&nbsp;</TableCell>
+              <TableCell align="right">Address&nbsp;</TableCell>
+              <TableCell align="right">Locality&nbsp;</TableCell>
+              <TableCell align="right">Postal Code&nbsp;</TableCell>
+              <TableCell align="right">Country&nbsp;</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {props.data.customers.map((customer: Customer, index: number) => (
+              <TableRow
+                key={index}
+                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+              >
+                <TableCell component="th" scope="row">
+                  {customer.given_name}
+                </TableCell>
+                <TableCell align="right">{customer.family_name}</TableCell>
+                <TableCell align="right">
+                  {new Date(customer.birthday).toDateString()}
+                </TableCell>
+                <TableCell align="right">{customer.email_address}</TableCell>
+                <TableCell align="right">
+                  {new Date(customer.created_at).toDateString()}
+                </TableCell>
+                <TableCell align="right">
+                  {customer.address.address_line_1}
+                </TableCell>
+                <TableCell align="right">{customer.address.locality}</TableCell>
+                <TableCell align="right">
+                  {customer.address.postal_code}
+                </TableCell>
+                <TableCell align="right">{customer.address.country}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </>
+  );
 }
 
 function Message(props: {
-  text: string;
-  role: string;
-  type: string;
+  text: MessageDict["text"];
+  role: MessageDict["role"];
+  type: MessageDict["type"];
   data?: any;
   showLoader?: boolean;
   generateProduct?: () => void;
+  runCustomerAnalysis?: () => void;
   selectedLocale: string;
 }) {
   let { text, role } = props;
@@ -179,7 +280,40 @@ function Message(props: {
           </div>
         </div>
         <div className="message-body">
-          <CatalogMessage {...props} />
+          <CatalogMessage
+            data={props.data}
+            generateProduct={props.generateProduct}
+          />
+        </div>
+      </div>
+    );
+  }
+
+  if (
+    props.type === "store-customers" &&
+    props.data &&
+    props.runCustomerAnalysis
+  ) {
+    return (
+      <div className="message system">
+        <div className="avatar-holder">
+          <div className="avatar">
+            {role === "system" ? (
+              <img
+                id="system_icon"
+                src={`${PUBLIC_URL}/square_bot.svg`}
+                alt="Square AI"
+              />
+            ) : (
+              <PersonIcon />
+            )}
+          </div>
+        </div>
+        <div className="message-body">
+          <StoreCustomersMessage
+            data={props.data}
+            runCustomerAnalysis={props.runCustomerAnalysis}
+          />
         </div>
       </div>
     );
@@ -215,7 +349,7 @@ function Message(props: {
 
         {props.type === "image/png" && (
           <>
-            <Typography variant="h2" className="heading">
+            <Typography variant="h2" className="heading heading2">
               Generated Image for: {props.data.name}
             </Typography>
             <Typography variant="body2" color="text.secondary">
@@ -231,7 +365,7 @@ function Message(props: {
         )}
         {props.type === "image/jpeg" && (
           <>
-            <Typography variant="h2" className="heading">
+            <Typography variant="h2" className="heading heading2">
               Generated Image for: {props.data.name}
             </Typography>
             <Typography variant="body2" color="text.secondary">
@@ -266,7 +400,7 @@ function Message(props: {
 }
 
 export enum WaitingStates {
-  GeneratingCode = "Toucan AI is writing a reply...",
+  GeneratingCode = "Square AI is writing a reply...",
   RunningCode = "Running code",
   UploadingFile = "Uploading file",
   Idle = "Idle",
@@ -278,6 +412,7 @@ export default function Chat(props: {
   messages: Array<MessageDict>;
   selectedLocale: string;
   generateProduct: () => void;
+  runCustomerAnalysis: () => void;
 }) {
   return (
     <>
@@ -292,6 +427,7 @@ export default function Chat(props: {
               data={message.data}
               selectedLocale={props.selectedLocale}
               generateProduct={props.generateProduct}
+              runCustomerAnalysis={props.runCustomerAnalysis}
             />
           );
         })}

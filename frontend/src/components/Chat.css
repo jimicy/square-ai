@@ -95,9 +95,12 @@ div.message-righthand {
     background: #000000!important;
 }
 .heading {
-    font-size: 1rem !important;
     margin: 0;
     margin-bottom: 20px;
+}
+
+.heading2 {
+    font-size: 1rem !important;
 }
 
 .generatedImg > img {

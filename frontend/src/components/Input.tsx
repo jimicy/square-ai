@@ -10,6 +10,7 @@ export default function Input(props: {
   onSendMessage: any;
   selectedLocale: string;
   getStoreCatalog: () => void;
+  getStoreCustomers: () => void;
 }) {
   let [inputIsFocused, setInputIsFocused] = useState<boolean>(false);
   let [userInput, setUserInput] = useState<string>("");
@@ -105,7 +106,7 @@ export default function Input(props: {
           className="suggestionChip"
           label="Get store customers"
           variant="outlined"
-          onClick={() => {}}
+          onClick={props.getStoreCustomers}
           style={{
             position: "absolute",
             top: -25,

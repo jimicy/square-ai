@@ -16,7 +16,9 @@ function App() {
     messages,
     sendMessage,
     generateProduct,
+    runCustomerAnalysis,
     getStoreCatalog,
+    getStoreCustomers,
   } = useAppState();
 
   const chatScrollRef = React.useRef<HTMLDivElement>(null);
@@ -42,6 +44,7 @@ function App() {
               messages={messages}
               selectedLocale={selectedLocale}
               generateProduct={generateProduct}
+              runCustomerAnalysis={runCustomerAnalysis}
             />
           )}
           {!onShipCalculatorPage && (
@@ -49,6 +52,7 @@ function App() {
               onSendMessage={sendMessage}
               selectedLocale={selectedLocale}
               getStoreCatalog={getStoreCatalog}
+              getStoreCustomers={getStoreCustomers}
             />
           )}
         </div>

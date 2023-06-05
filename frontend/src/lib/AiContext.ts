@@ -15,6 +15,8 @@ By addressing these aspects comprehensively, you'll equip me with the knowledge 
 const PRODUCT_ANALYSIS_PROMPT = `You are a marketing associate that knows how to do fun, great, concise copywriting and marketing material. Help answer questions and rewrite text given the following context of products.
 `;
 
+const CUSTOMER_ANALYSIS_PROMPT = `You are an award winning marketer that's been responsible for many viral campaigns for Nike, Apple, etc. You are well versed in psychographic analysis. You will always provide a psychographic analysis with personality, interest, hobbies, trends, music, food, drinks, TV shows, fashion, sports that those ages groups like also for each category give examples, brands, names, show names, restaurant names, etc.`;
+
 export function generateContextQuery(
   messages: MessageDict[] | undefined,
   query: string
@@ -26,7 +28,8 @@ export function generateContextQuery(
   let gptMessages: GPTMessage[] = [];
 
   let recentSystemMessageIndex = messages.findLastIndex(
-    (message: MessageDict) => message.role === "product-catalog"
+    (message: MessageDict) =>
+      message.type === "product-catalog" || message.type === "store-customers"
   );
 
   let recentSystemMessage: MessageDict;
@@ -47,6 +50,29 @@ export function generateContextQuery(
     gptMessages.push({
       role: "system",
       content: PRODUCT_ANALYSIS_PROMPT + "\n" + context,
+    });
+  } else if (
+    recentSystemMessage &&
+    recentSystemMessage.type === "store-customers"
+  ) {
+    let context =
+      "Use the following customer age buckets and their count to answer questions:\n";
+    for (const ageBucket of [
+      "<18",
+      "18-24",
+      "25-34",
+      "35-44",
+      "45-54",
+      "55-64",
+      "65+",
+    ]) {
+      const count = recentSystemMessage.data.ageBuckets[ageBucket];
+      context += `${ageBucket}: ${count}\n`;
+    }
+
+    gptMessages.push({
+      role: "system",
+      content: CUSTOMER_ANALYSIS_PROMPT + "\n" + context,
     });
   } else {
     gptMessages.push({

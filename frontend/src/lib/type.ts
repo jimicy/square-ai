@@ -11,18 +11,19 @@ export const PUBLIC_URL = location.origin;
 // Type definition for Chat Message.
 export type MessageDict = {
   text: string;
-  role: string;
+  role: "system" | "user";
   type:
     | "message"
     | "message_raw"
     | "system"
     | "product-catalog"
+    | "store-customers"
     | "image/png"
     | "image/jpeg";
   data?: any;
 };
 
-// Type definition for Catalog type Item
+// Type definition for Catalog type Item (Data passed to Chat).
 export interface Item {
   created_at: Date;
   id: string;
@@ -67,4 +68,36 @@ interface PriceMoney {
 interface PriceMoney {
   amount: number;
   currency: string;
+}
+
+// Type definition for Customer type Item (Data passed to Chat).
+export interface Customer {
+  address: Address;
+  birthday: Date;
+  company_name: string;
+  created_at: Date;
+  creation_source: string;
+  email_address: string;
+  family_name: string;
+  given_name: string;
+  group_ids: string[];
+  id: string;
+  preferences: Preferences;
+  reference_id: string;
+  segment_ids: string[];
+  updated_at: Date;
+  version: number;
+}
+
+interface Address {
+  address_line_1: string;
+  address_line_2: string;
+  administrative_district_level_1: string;
+  country: string;
+  locality: string;
+  postal_code: string;
+}
+
+interface Preferences {
+  email_unsubscribed: boolean;
 }

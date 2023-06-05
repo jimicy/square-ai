@@ -152,7 +152,7 @@ export function useAppState() {
   let [messages, setMessages] = useState<Array<MessageDict>>(
     Array.from([
       {
-        text: `Hello! I'm Square AI, I can help you analyse your business and generate new products and campaigns.`,
+        text: `Hello! I'm Square AI, I can help you analyze your business and generate new products and campaigns.`,
         role: "system",
         type: "message",
       },
@@ -245,6 +245,12 @@ export function useAppState() {
     }
   };
 
+  const runCustomerAnalysis = async () => {
+    const generateProductPrompt = `Tell me what age buckets have the most count! And show me a psychographic analysis with personality, interest, hobbies, trends, music, food, drinks, TV shows, fashion, sports that those ages groups like. Also for each category give examples, brands, names, show names, restaurant names, etc.`;
+    const customUserMessage = "Run customer analysis!";
+    await sendMessage(generateProductPrompt, customUserMessage);
+  };
+
   const getStoreCatalog = async function () {
     if (document.hidden) {
       return;
@@ -261,6 +267,23 @@ export function useAppState() {
     });
   };
 
+  const getStoreCustomers = async function () {
+    if (document.hidden) {
+      return;
+    }
+
+    let response = await fetch(`${API_ADDRESS}/fetch-customers`);
+    let data = await response.json();
+    console.log(data);
+
+    addMessage({
+      text: `Here are some of the products from your store catalog!`,
+      type: "store-customers",
+      role: "system",
+      data: data,
+    });
+  };
+
   return {
     selectedLocale,
     setSelectedLocale,
@@ -271,7 +294,9 @@ export function useAppState() {
     addMessage,
     sendMessage,
     generateProduct,
+    runCustomerAnalysis,
     getStoreCatalog,
+    getStoreCustomers,
     onShipCalculatorPage,
     setOnShipCalculatorPage,
   };
