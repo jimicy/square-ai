@@ -1,0 +1,25 @@
+#root {
+  width: 100%;
+  margin: 0 auto;
+}
+
+.app {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+}
+
+.main {
+  background: linear-gradient( #fffff2 0%,#ecffed 100%);
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  overflow: hidden;
+  height: 100vh;
+  opacity: 0.8;
+  background-image: radial-gradient(#9EBFAB 0.7px, #fffff2 0.5px);
+  background-size: 10px 10px;
+  
+ 
+}
