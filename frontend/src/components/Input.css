@@ -31,8 +31,7 @@ button.voice {
     position: absolute;
     height: 100%;
     width: 100%;
-    /* background-color: #4285f4; */
-	background: linear-gradient(-45deg, #FF7800, #E0F399, #1FD3DA);
+	background: linear-gradient(-45deg, #092d6c, #bed4e5, #2ed0d7);
     border-radius: 50%;
     z-index: -1;
     opacity: 0.7;
