@@ -1,7 +1,6 @@
 .sidebar {
-    min-width: 260px;
-    
-    background: linear-gradient( #FBFFC9 0%, #CFEFBF 20%,#45B0B0 60%,#204763 100%);
+
+    background:  #ffffff;
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -9,6 +8,7 @@
     padding: 0.75rem;
     color: #fff;
     font-family: 'Inter';
+    box-shadow:1px 1px grey;
 }
 
 .logo {
@@ -44,10 +44,11 @@ a:hover {
 
 button, select {
     padding: 0.8rem;
-    border: none;
+    border-width: thin;
+    border-color: rgb(0, 0, 0);
     border-radius: .25rem;
-    background-color: #333;
-    color: #fff;
+    background-color: rgb(255, 255, 255);
+    color: rgb(0, 0, 0);
 }
 
 select option {
@@ -70,3 +71,13 @@ label {
 label.header {
     font-size: 1.2rem;
 }
+
+.connectStore{
+    background: #000000!important;
+}
+
+.rateCalculator{
+    background: #000000!important;
+}
+
+

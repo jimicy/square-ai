@@ -10,7 +10,7 @@ div.message.system {
 }
 
 div.avatar {
-    background: rgb(194, 142, 210);
+    background: rgb(97, 128, 199);
     padding: 5px;
     color: #fff;
     border-radius: 2px;
@@ -27,7 +27,7 @@ div.avatar svg {
 }
 
 div.message.system div.avatar {
-    background: #74a89b;
+    background: #f9f9f9;
 }
 
 .cell-output {
@@ -83,4 +83,14 @@ div.message-righthand {
 #system_icon{
     width: 1.5em;
     height: 1.5em;
+}
+
+
+.user{
+    color: rgb(97, 128, 199);
+
+}
+
+.generateProduct{
+    background: #000000!important;
 }

@@ -97,3 +97,11 @@ svg {
 .input-holder.focused {
     border: rgba(0,0,0,.3) 1px solid;
 }
+
+.suggestionChip{
+
+    color: #ffffff!important;
+    background:rgb(0, 0, 0)!important;
+    border-width: 1.5px!important;
+    border-color: rgb(215, 215, 215)!important;
+}

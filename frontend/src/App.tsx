@@ -200,10 +200,7 @@ function App() {
   let [messages, setMessages] = useState<Array<MessageDict>>(
     Array.from([
       {
-        text: `Hello! I'm Toucan, an AI powered consultant fined tuned for the international trade, shipping, logistics industry. I can help you with your international trade needs!
-  You can ask me questions like:
-  • How do I ship from Malaysia to United States? Explain step by step.
-  • What the tax rate for sales of goods, provisions of services and import for Thailand?`,
+        text: `Hello! I'm Square AI, I can help you analyse your business and generate new products and campaigns.`,
         role: "system",
         type: "message",
       },

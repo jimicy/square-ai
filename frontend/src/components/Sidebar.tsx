@@ -19,15 +19,12 @@ export default function Sidebar(props: {
     <>
       <div className="sidebar">
         <div className="logo">
-          <img src={`${PUBLIC_URL}/toucan_logo.svg`} alt="toucan logo" />
-          TOUCAN
-          <div className="github">
-            <a href="https://github.com/jimicy/square-ai">Open Source</a>
-          </div>
+          <img src={`${PUBLIC_URL}/square_icon.png`} alt="square logo" />
+          AI
         </div>
         <div className="settings">
           <label className="header"></label>
-          <Button
+          <Button className = "connectStore"
             variant="contained"
             onClick={connectSquareStore}
             style={{ width: 300, marginBottom: 15 }}
@@ -35,7 +32,7 @@ export default function Sidebar(props: {
             Connect Square Store
           </Button>
           {!props.onShipCalculatorPage && (
-            <Button
+            <Button className = "rateCalculator"
               variant="contained"
               onClick={() => props.setOnShipCalculatorPage(true)}
               style={{ width: 300 }}

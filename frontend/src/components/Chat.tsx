@@ -38,7 +38,7 @@ function CatalogMessage(props: {
         <p>
           Select the products you want our algorithm to take in as inspiration.
         </p>
-        <Button
+        <Button className = "generateProduct"
           variant="contained"
           onClick={() => {}}
           style={{ width: 300, marginBottom: 15 }}
@@ -165,8 +165,8 @@ function Message(props: {
             {role === "system" ? (
               <img
                 id="system_icon"
-                src={`${PUBLIC_URL}/toucan_logoWhite.svg`}
-                alt="toucan logo"
+                src={`${PUBLIC_URL}/square_bot.svg`}
+                alt="Square AI"
               />
             ) : (
               <PersonIcon />
@@ -187,8 +187,8 @@ function Message(props: {
           {role == "system" ? (
             <img
               id="system_icon"
-              src={`${PUBLIC_URL}/toucan_logoWhite.svg`}
-              alt="toucan logo"
+              src={`${PUBLIC_URL}/square_bot.svg`}
+              alt="Square AI"
             />
           ) : (
             <PersonIcon />
