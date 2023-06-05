@@ -56,14 +56,9 @@ def index():
 
 @app.route('/api/generate', methods=['POST'])
 def generate_response():
-  if (request.json["locale"].startswith("en")):
-    ai_english_response = ai.ask(request.json["prompt"])
-    response = jsonify({"text": ai_english_response, "locale": request.json["locale"]})
-  else:
-    english_user_prompt = translate_text(request.json["prompt"])
-    ai_english_response = ai.ask(english_user_prompt)
-    ai_translated_response = translate_text(ai_english_response, request.json["locale"])
-    response = jsonify({"text": ai_translated_response, "locale": request.json["locale"]})
+  ai_english_response = ai.ask(request.json["messages"])
+  response = jsonify({"text": ai_english_response, "locale": request.json["locale"]})
+
   return response
 
 @app.route('/api/synthesize-speech', methods=['POST'])
@@ -93,7 +88,7 @@ def fetch_store_catalog():
   reponse_items = []
   object_ids = []
   for item in items["objects"]:
-    if item["item_data"]["image_ids"]:
+    if "item_data" in item and "image_ids" in item["item_data"]:
       image_id = item["item_data"]["image_ids"][0]
       object_ids.append(image_id)
       reponse_items.append(item)
