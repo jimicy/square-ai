@@ -319,37 +319,21 @@ function App() {
     }
   };
 
-  const getStoreCatalog = React.useCallback(async function () {
+  const getStoreCatalog = async function () {
     if (document.hidden) {
       return;
     }
 
     let response = await fetch(`${Config.API_ADDRESS}/fetch-store-catalog`);
     let data = await response.json();
-    return data;
-  }, []);
 
-  React.useEffect(() => {
-    let ignore = false;
-    getStoreCatalog().then((data) => {
-      if (ignore) {
-        return;
-      }
-
-      console.log(data);
-
-      addMessage({
-        text: `Here are some of the products from your store catalog!`,
-        type: "product-catalog",
-        role: "system",
-        data: data,
-      });
+    addMessage({
+      text: `Here are some of the products from your store catalog!`,
+      type: "product-catalog",
+      role: "system",
+      data: data,
     });
-
-    return () => {
-      ignore = true;
-    };
-  }, [getStoreCatalog]);
+  };
 
   function completeUpload(filename: string) {
     addMessage({
@@ -449,6 +433,7 @@ function App() {
               onCompletedUpload={completeUpload}
               onStartUpload={startUpload}
               selectedLocale={selectedLocale}
+              getStoreCatalog={getStoreCatalog}
             />
           )}
         </div>

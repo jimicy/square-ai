@@ -48,7 +48,7 @@ export default function ImageCard(props: { item: Item }) {
         }
         action={<Checkbox defaultChecked />}
         title={item.item_data?.name}
-        subheader={item.created_at.toString()}
+        subheader={new Date(item.created_at).toDateString()}
       />
       <CardMedia
         component="img"

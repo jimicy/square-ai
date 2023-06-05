@@ -12,6 +12,7 @@ export default function Input(props: {
   onStartUpload: any;
   onCompletedUpload: any;
   selectedLocale: string;
+  getStoreCatalog: () => void;
 }) {
   let fileInputRef = useRef<HTMLInputElement>(null);
   let [inputIsFocused, setInputIsFocused] = useState<boolean>(false);
@@ -102,7 +103,8 @@ export default function Input(props: {
   return (
     <>
       <div className="input-parent" style={{ transform: "translateZ(0)" }}>
-        <Chip className = "suggestionChip"
+        <Chip
+          className="suggestionChip"
           label="Popular items analysis"
           variant="outlined"
           onClick={() => {}}
@@ -113,10 +115,11 @@ export default function Input(props: {
             background: "lightyellow",
           }}
         />
-        <Chip className = "suggestionChip"
+        <Chip
+          className="suggestionChip"
           label="Get store catalog"
           variant="outlined"
-          onClick={() => {}}
+          onClick={props.getStoreCatalog}
           style={{
             position: "absolute",
             top: -25,
@@ -124,7 +127,8 @@ export default function Input(props: {
             background: "lightyellow",
           }}
         />
-        <Chip className = "suggestionChip"
+        <Chip
+          className="suggestionChip"
           label="Get store orders"
           variant="outlined"
           onClick={() => {}}
@@ -135,7 +139,8 @@ export default function Input(props: {
             background: "lightyellow",
           }}
         />
-        <Chip className = "suggestionChip"
+        <Chip
+          className="suggestionChip"
           label="Get store customers"
           variant="outlined"
           onClick={() => {}}
