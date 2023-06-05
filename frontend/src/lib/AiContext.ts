@@ -58,10 +58,13 @@ export function generateContextQuery(
 
   // Generate the current conversation history
   gptMessages = gptMessages.concat(
-    messages.slice(recentSystemMessageIndex + 1).map((message: MessageDict) => {
-      const chatRole = message.role === "system" ? "assistant" : "user";
-      return { role: chatRole, content: message.text };
-    })
+    messages
+      .slice(recentSystemMessageIndex + 1)
+      .filter((msg) => msg.type === "message" || msg.type === "system")
+      .map((message: MessageDict) => {
+        const chatRole = message.role === "system" ? "assistant" : "user";
+        return { role: chatRole, content: message.text };
+      })
   );
 
   // Add the latest user prompt to answer for ChatGPT.

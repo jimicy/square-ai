@@ -94,3 +94,12 @@ div.message-righthand {
 .generateProduct{
     background: #000000!important;
 }
+.heading {
+    font-size: 1rem !important;
+    margin: 0;
+    margin-bottom: 20px;
+}
+
+.generatedImg > img {
+    max-height: 500px;
+}

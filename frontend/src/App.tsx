@@ -271,11 +271,40 @@ function App() {
       if (response.status === 200) {
         addMessage({ text: text, type: "message", role: "system" });
       }
+
+      return data;
     } catch (error) {
       console.error(
         "There has been a problem with your fetch operation:",
         error
       );
+    }
+  };
+
+  const generateProduct = async () => {
+    const gptResponse = await sendMessage(
+      `Come up with only one new product idea for me, based on products you've seen so far. The products should belong in the same category. Print just the new product name followed by a new line and its description. Please generate a completely different product that is novel, interesting and unique.`
+    );
+
+    const name = gptResponse.text.split("\n")[0];
+
+    let response = await fetch(`${Config.API_ADDRESS}/generate-product`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        prompt: name,
+      }),
+    });
+    let data = await response.json();
+    for (const img of data) {
+      addMessage({
+        text: img["base64"],
+        type: "image/png",
+        role: "system",
+        data: { name: name },
+      });
     }
   };
 
@@ -400,6 +429,7 @@ function App() {
               waitingForSystem={waitingForSystem}
               messages={messages}
               selectedLocale={selectedLocale}
+              generateProduct={generateProduct}
             />
           )}
           {!onShipCalculatorPage && (

@@ -9,7 +9,7 @@ import { RefObject } from "react";
 import IconButton from "@mui/material/IconButton";
 import { useCopyToClipboard } from "usehooks-ts";
 import ImageCard from "./ImageCard";
-import { Button, Grid } from "@mui/material";
+import { Button, Grid, Typography } from "@mui/material";
 
 function CatalogMessage(props: {
   text: string;
@@ -18,6 +18,7 @@ function CatalogMessage(props: {
   data?: any;
   showLoader?: boolean;
   selectedLocale: string;
+  generateProduct?: () => void;
 }) {
   return (
     <>
@@ -40,7 +41,7 @@ function CatalogMessage(props: {
         </p>
         <Button className = "generateProduct"
           variant="contained"
-          onClick={() => {}}
+          onClick={props.generateProduct}
           style={{ width: 300, marginBottom: 15 }}
         >
           Generate a new product
@@ -106,6 +107,7 @@ function Message(props: {
   type: string;
   data?: any;
   showLoader?: boolean;
+  generateProduct?: () => void;
   selectedLocale: string;
 }) {
   let { text, role } = props;
@@ -157,7 +159,7 @@ function Message(props: {
     setCopyToClipboard(text);
   };
 
-  if (props.type === "product-catalog" && props.data) {
+  if (props.type === "product-catalog" && props.data && props.generateProduct) {
     return (
       <div className="message system">
         <div className="avatar-holder">
@@ -208,33 +210,54 @@ function Message(props: {
             ></div>
           ))}
 
-        {props.type == "image/png" && (
-          <div
-            className="cell-output-image"
-            dangerouslySetInnerHTML={{
-              __html: `<img src='data:image/png;base64,${text}' />`,
-            }}
-          ></div>
+        {props.type === "image/png" && (
+          <>
+            <Typography variant="h2" className="heading">
+              Generated Image for: {props.data.name}
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              Generated using Stable Diffusion V2.1
+            </Typography>
+            <div
+              className="cell-output-image generatedImg"
+              dangerouslySetInnerHTML={{
+                __html: `<img src='data:image/png;base64,${text}' />`,
+              }}
+            ></div>
+          </>
         )}
-        {props.type == "image/jpeg" && (
-          <div
-            className="cell-output-image"
-            dangerouslySetInnerHTML={{
-              __html: `<img src='data:image/jpeg;base64,${text}' />`,
-            }}
-          ></div>
+        {props.type === "image/jpeg" && (
+          <>
+            <Typography variant="h2" className="heading">
+              Generated Image for: {props.data.name}
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              Generated using Stable Diffusion V2.1
+            </Typography>
+            <div
+              className="cell-output-image generatedImg"
+              dangerouslySetInnerHTML={{
+                __html: `<img src='data:image/jpeg;base64,${text}' />`,
+              }}
+            ></div>
+          </>
         )}
       </div>
-      <div className="message-righthand">
-        {role === "system" && (
-          <IconButton aria-label="text-to-speech" onClick={handleTextToSpeech}>
-            <VolumeUpIcon className="rightHandIcons" />
+      {props.type === "message" && (
+        <div className="message-righthand">
+          {role === "system" && (
+            <IconButton
+              aria-label="text-to-speech"
+              onClick={handleTextToSpeech}
+            >
+              <VolumeUpIcon className="rightHandIcons" />
+            </IconButton>
+          )}
+          <IconButton aria-label="copy-to-clipboard" onClick={copyToClipboard}>
+            <ContentCopyIcon className="rightHandIcons" />
           </IconButton>
-        )}
-        <IconButton aria-label="copy-to-clipboard" onClick={copyToClipboard}>
-          <ContentCopyIcon className="rightHandIcons" />
-        </IconButton>
-      </div>
+        </div>
+      )}
     </div>
   );
 }
@@ -251,6 +274,7 @@ export default function Chat(props: {
   chatScrollRef: RefObject<HTMLDivElement>;
   messages: Array<MessageDict>;
   selectedLocale: string;
+  generateProduct: () => void;
 }) {
   return (
     <>
@@ -264,6 +288,7 @@ export default function Chat(props: {
               type={message.type}
               data={message.data}
               selectedLocale={props.selectedLocale}
+              generateProduct={props.generateProduct}
             />
           );
         })}
