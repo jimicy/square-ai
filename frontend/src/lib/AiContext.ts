@@ -1,5 +1,4 @@
-import { MessageDict } from "../App";
-import { Item } from "./type";
+import { Item, MessageDict } from "./type";
 
 type GPTMessage = {
   role: "user" | "assistant" | "system";

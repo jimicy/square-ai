@@ -1,12 +1,8 @@
+import { PUBLIC_URL } from "../lib/type";
 import "./Sidebar.css";
-import { PUBLIC_URL } from "../App";
 import Button from "@mui/material/Button";
 
 export default function Sidebar(props: {
-  models: Array<{ name: string; displayName: string }>;
-  selectedModel: string;
-  onSelectModel: any;
-
   languages: Array<{ language: string; locale: string }>;
   selectedLocale: string;
   setSelectedLocale: any;
@@ -24,7 +20,8 @@ export default function Sidebar(props: {
         </div>
         <div className="settings">
           <label className="header"></label>
-          <Button className = "connectStore"
+          <Button
+            className="connectStore"
             variant="contained"
             onClick={connectSquareStore}
             style={{ width: 300, marginBottom: 15 }}
@@ -32,7 +29,8 @@ export default function Sidebar(props: {
             Connect Square Store
           </Button>
           {!props.onShipCalculatorPage && (
-            <Button className = "rateCalculator"
+            <Button
+              className="rateCalculator"
               variant="contained"
               onClick={() => props.setOnShipCalculatorPage(true)}
               style={{ width: 300 }}

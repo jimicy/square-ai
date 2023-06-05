@@ -20,8 +20,7 @@ import {
 } from "@mui/material";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-
-import { API_ADDRESS } from "../App";
+import { API_ADDRESS } from "../lib/type";
 
 const COUNTRY_CODES = [
   { name: "Afghanistan", code: "AF" },

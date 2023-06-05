@@ -3,13 +3,13 @@ import "./Chat.css";
 import VolumeUpIcon from "@mui/icons-material/VolumeUp";
 import PersonIcon from "@mui/icons-material/Person";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
-import { API_ADDRESS, MessageDict, PUBLIC_URL } from "../App";
 
 import { RefObject } from "react";
 import IconButton from "@mui/material/IconButton";
 import { useCopyToClipboard } from "usehooks-ts";
 import ImageCard from "./ImageCard";
 import { Button, Grid, Typography } from "@mui/material";
+import { API_ADDRESS, MessageDict, PUBLIC_URL } from "../lib/type";
 
 function CatalogMessage(props: {
   text: string;
