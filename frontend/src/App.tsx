@@ -239,7 +239,7 @@ function App() {
     }
   };
 
-  const sendMessage = async (userInput: string) => {
+  const sendMessage = async (userInput: string, customUserMessage?: string) => {
     try {
       if (COMMANDS.includes(userInput)) {
         handleCommand(userInput);
@@ -250,7 +250,15 @@ function App() {
         return;
       }
 
-      addMessage({ text: userInput, type: "message", role: "user" });
+      if (customUserMessage) {
+        addMessage({
+          text: customUserMessage,
+          type: "message_raw",
+          role: "user",
+        });
+      } else {
+        addMessage({ text: userInput, type: "message", role: "user" });
+      }
       setWaitingForSystem(WaitingStates.GeneratingCode);
 
       const response = await fetch(`${API_ADDRESS}/generate`, {
@@ -282,8 +290,11 @@ function App() {
   };
 
   const generateProduct = async () => {
+    const generateProductPrompt = `Come up with only one new product idea for me, based on products you've seen so far. The products should belong in the same category. Print just the new product name followed by a new line and its description. Please generate a completely different product that is novel, interesting and unique.`;
+    const customUserMessage = "Generate me a new product idea!";
     const gptResponse = await sendMessage(
-      `Come up with only one new product idea for me, based on products you've seen so far. The products should belong in the same category. Print just the new product name followed by a new line and its description. Please generate a completely different product that is novel, interesting and unique.`
+      generateProductPrompt,
+      customUserMessage
     );
 
     const name = gptResponse.text.split("\n")[0];

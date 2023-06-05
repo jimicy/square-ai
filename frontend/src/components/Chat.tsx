@@ -22,24 +22,14 @@ function CatalogMessage(props: {
 }) {
   return (
     <>
-      <Grid
-        container
-        spacing={3}
-        style={{ marginLeft: 15, maxHeight: 900, overflow: "scroll" }}
-      >
-        {props.data.map((item: any, index: number) => (
-          <ImageCard key={item["id"]} item={item} />
-        ))}
-      </Grid>
-      <div>
-        <p>
+      <div style={{ marginBottom: 20 }}>
+        <Typography paragraph>
           Here are the products from your Square Catalog. We use ChatGPT and
-          Stable Diffusion to generate a new product.
-        </p>
-        <p>
+          Stable Diffusion to generate a new product. <br />
           Select the products you want our algorithm to take in as inspiration.
-        </p>
-        <Button className = "generateProduct"
+        </Typography>
+        <Button
+          className="generateProduct"
           variant="contained"
           onClick={props.generateProduct}
           style={{ width: 300, marginBottom: 15 }}
@@ -47,6 +37,19 @@ function CatalogMessage(props: {
           Generate a new product
         </Button>
       </div>
+      <Grid
+        container
+        spacing={3}
+        style={{
+          marginLeft: 15,
+          maxHeight: 900,
+          overflow: "scroll",
+        }}
+      >
+        {props.data.map((item: any, index: number) => (
+          <ImageCard key={item["id"]} item={item} />
+        ))}
+      </Grid>
     </>
   );
   // return (
@@ -198,7 +201,7 @@ function Message(props: {
         </div>
       </div>
       <div className="message-body">
-        {(props.type == "message" || props.type == "message_raw") &&
+        {(props.type === "message" || props.type === "message_raw") &&
           (props.showLoader ? (
             <div>
               {text} {props.showLoader ? <div className="loader"></div> : null}
