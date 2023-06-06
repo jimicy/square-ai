@@ -1,4 +1,4 @@
-import { Item, MessageDict } from "./type";
+import { Item, MessageDict, PopularItemAnalysis } from "./type";
 
 type GPTMessage = {
   role: "user" | "assistant" | "system";
@@ -80,7 +80,17 @@ export function generateContextQuery(
       content: CUSTOMER_ANALYSIS_PROMPT + "\n" + context,
     });
   } else if (recentSystemMessage && recentSystemMessage.type === "popular-items-analysis") {
+    const data: PopularItemAnalysis = recentSystemMessage.data;
+
     let context = "Use this store's popular products and target age bucket demographic psychographic analysis to inform coming up with a new product idea. Do not say this back to me.\n";
+
+    context += "Popular Products:\n";
+    for (const item of data.top_three_items) {
+      context += `${item.name}\n`;
+    }
+
+    context += "Target age bucket demographic psychographic analysis:\n";
+    context += data.top_three_items_analysis + "\n";
 
     gptMessages.push({
       role: "user",
