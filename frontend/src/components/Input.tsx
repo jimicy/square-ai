@@ -69,7 +69,7 @@ export default function Input(props: {
       <div className="input-parent" style={{ transform: "translateZ(0)" }}>
         <Chip
           className="suggestionChip"
-          label="Popular items analysis"
+          label="Popular product analysis"
           variant="outlined"
           onClick={props.getPopularItemsAnalysis}
           style={{
@@ -87,7 +87,7 @@ export default function Input(props: {
           style={{
             position: "absolute",
             top: -25,
-            left: 180,
+            left: 190,
             background: "lightyellow",
           }}
         />
@@ -99,7 +99,7 @@ export default function Input(props: {
           style={{
             position: "absolute",
             top: -25,
-            left: 310,
+            left: 320,
             background: "lightyellow",
           }}
         />
@@ -111,7 +111,7 @@ export default function Input(props: {
           style={{
             position: "absolute",
             top: -25,
-            left: 440,
+            left: 450,
             background: "lightyellow",
           }}
         />
@@ -123,7 +123,7 @@ export default function Input(props: {
           style={{
             position: "absolute",
             top: -25,
-            left: 590,
+            left: 600,
             background: "lightyellow",
           }}
         />
