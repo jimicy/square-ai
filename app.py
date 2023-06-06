@@ -58,7 +58,6 @@ def index():
 def generate_response():
   ai_english_response = ai.ask(request.json["messages"])
   response = jsonify({"text": ai_english_response, "locale": request.json["locale"]})
-
   return response
 
 @app.route('/api/synthesize-speech', methods=['POST'])
@@ -85,13 +84,13 @@ def fetch_store_catalog():
   items = response.body
 
   # Keep track of image object ids to later retrieve image urls.
-  reponse_items = []
+  response_items = []
   object_ids = []
   for item in items["objects"]:
     if "item_data" in item and "image_ids" in item["item_data"]:
       image_id = item["item_data"]["image_ids"][0]
       object_ids.append(image_id)
-      reponse_items.append(item)
+      response_items.append(item)
 
   # Batch retrieve image urls for all image object ids.
   image_id_to_image_url = {}
@@ -100,9 +99,89 @@ def fetch_store_catalog():
     image_id_to_image_url[image["id"]] = image["image_data"]["url"]
 
   # Add image urls to response items.
-  for i in range(len(reponse_items)):
+  for i in range(len(response_items)):
     image_id = object_ids[i]
     image_url = image_id_to_image_url[image_id]
-    item = reponse_items[i]["item_data"]["image_url"] = image_url
+    item = response_items[i]["item_data"]["image_url"] = image_url
 
-  return jsonify(reponse_items)
+  return jsonify(response_items)
+
+@app.route('/api/generate-product', methods=['POST'])
+def generate_product():
+  engine_id = "stable-diffusion-xl-beta-v2-2-2"
+  api_host = os.getenv('API_HOST', 'https://api.stability.ai')
+  api_key = os.getenv("STABILITY_API_KEY")
+
+  if api_key is None:
+      raise Exception("Missing Stability API key.")
+  response = requests.post(
+      f"{api_host}/v1/generation/{engine_id}/text-to-image",
+      headers={
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+          "Authorization": f"Bearer {api_key}"
+      },
+      json={
+          "text_prompts": [
+              {
+                  "text": request.json["prompt"]
+              }
+          ],
+          "cfg_scale": 7,
+          "clip_guidance_preset": "FAST_BLUE",
+          "height": 512,
+          "width": 512,
+          "samples": 1,
+          "steps": 30,
+      },
+  )
+  if response.status_code != 200:
+      raise Exception("Non-200 response: " + str(response.text))
+  data = response.json()["artifacts"]
+  return data
+
+def calculate_age(birth_date):
+  today = date.today()
+  birth_date = datetime.strptime(birth_date, "%Y-%m-%d").date()
+  age = relativedelta(today, birth_date)
+  return age.years
+
+@app.route('/api/fetch-customers', methods=['GET'])
+def fetch_customers():
+  client = Client(
+    access_token=os.environ['SQUARE_ACCESS_TOKEN'],
+    environment='sandbox')
+  customers_api = client.customers
+  response = customers_api.list_customers()
+
+  age_buckets = {
+      "<18": 0,
+      "18-24": 0,
+      "25-34": 0,
+      "35-44": 0,
+      "45-54": 0,
+      "55-64": 0,
+      "65+": 0
+  }
+  for customer in response.body["customers"]:
+    if "birthday" in customer:
+      age = calculate_age(customer["birthday"])
+      if age < 18:
+        age_buckets["<18"] += 1
+      elif age < 25:
+        age_buckets["18-24"] += 1
+      elif age < 35:
+        age_buckets["25-34"] += 1
+      elif age < 45:
+        age_buckets["35-44"] += 1
+      elif age < 55:
+        age_buckets["45-54"] += 1
+      elif age < 65:
+        age_buckets["55-64"] += 1
+      else:
+        age_buckets["65+"] += 1
+
+  return jsonify({
+    'ageBuckets': age_buckets,
+    'customers': response.body["customers"][:20]
+  })
