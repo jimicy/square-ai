@@ -6,8 +6,6 @@ export default function Sidebar(props: {
   languages: Array<{ language: string; locale: string }>;
   selectedLocale: string;
   setSelectedLocale: any;
-  onShipCalculatorPage: boolean;
-  setOnShipCalculatorPage: (value: boolean) => void;
 }) {
   const connectSquareStore = () => {};
 
@@ -28,25 +26,6 @@ export default function Sidebar(props: {
           >
             Connect Square Store
           </Button>
-          {/* {!props.onShipCalculatorPage && (
-            <Button
-              className="rateCalculator"
-              variant="contained"
-              onClick={() => props.setOnShipCalculatorPage(true)}
-              style={{ width: 300 }}
-            >
-              Shipping Rate Calculator
-            </Button>
-          )}
-          {props.onShipCalculatorPage && (
-            <Button
-              variant="contained"
-              onClick={() => props.setOnShipCalculatorPage(false)}
-              style={{ width: 300 }}
-            >
-              Chat AI
-            </Button>
-          )} */}
           <label>Languages</label>
           <select
             value={props.selectedLocale}

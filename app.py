@@ -20,7 +20,6 @@ else:
 
 OPEN_API_KEY = os.environ.get("OPEN_API_KEY")
 GOOGLE_CLOUD_API_KEY = os.environ.get("GOOGLE_CLOUD_API_KEY")
-SHIPENGINE_API_KEY = os.getenv("SHIPENGINE_API_KEY")
 
 def translate_text(text, target="en"):
   service = build("translate", "v2", developerKey=GOOGLE_CLOUD_API_KEY)
@@ -69,14 +68,6 @@ def synthesize_speech():
   # Get the synthesized speech audio content
   audio_content = text_to_speech(request.json["text"], request.json["locale"])
   return jsonify({"audioContent": audio_content})
-
-@app.route('/api/estimate-ship-rate', methods=['POST'])
-def estimate_ship_rate():
-  response = requests.post("https://api.shipengine.com/v1/rates/estimate",
-    headers={"Content-Type":"application/json", "API-key": SHIPENGINE_API_KEY},
-    json=request.json
-    )
-  return response.json()
 
 @app.route('/api/fetch-store-catalog', methods=['GET'])
 def fetch_store_catalog():

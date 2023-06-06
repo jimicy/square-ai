@@ -162,8 +162,6 @@ export function useAppState() {
     WaitingStates.Idle
   );
 
-  const [onShipCalculatorPage, setOnShipCalculatorPage] = useState(false);
-
   const addMessage = (message: MessageDict) => {
     setMessages((state: any) => {
       return [...state, message];
@@ -320,7 +318,5 @@ export function useAppState() {
     getStoreCatalog,
     getStoreCustomers,
     getPopularItemsAnalysis,
-    onShipCalculatorPage,
-    setOnShipCalculatorPage,
   };
 }
