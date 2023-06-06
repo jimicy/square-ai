@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useLocalStorage } from "usehooks-ts";
 import { API_ADDRESS, MessageDict } from "./lib/type";
 import { WaitingStates } from "./components/Chat";
-import { generateContextQuery } from "./lib/AiContext";
+import { CUSTOMER_ANALYSIS_USER_QUERY, GENERATE_NEW_PRODUCT_USER_QUERY, generateContextQuery } from "./lib/AiContext";
 
 export const SupportedLanguages = [
   { language: "Afrikaans", locale: "af" },
@@ -215,14 +215,13 @@ export function useAppState() {
   };
 
   const generateProduct = async () => {
-    const generateProductPrompt = `Come up with only one new product idea for me, based on products you've seen so far. The products should belong in the same category. Print just the new product name followed by a new line and its description. Please generate a completely different product that is novel, interesting and unique.`;
     const customUserMessage = "Generate me a new product idea!";
     const gptResponse = await sendMessage(
-      generateProductPrompt,
+        GENERATE_NEW_PRODUCT_USER_QUERY,
       customUserMessage
     );
 
-    const name = gptResponse.text.split("\n")[0];
+    const name = gptResponse.text.split("\n")[0].replace("Product name: ", "");
 
     setWaitingForSystem(WaitingStates.GeneratingCode);
     let response = await fetch(`${API_ADDRESS}/generate-product`, {
@@ -248,10 +247,9 @@ export function useAppState() {
   };
 
   const runCustomerAnalysis = async () => {
-    const generateProductPrompt = `Tell me what age buckets have the most count! And show me a psychographic analysis with personality, interest, hobbies, trends, music, food, drinks, TV shows, fashion, sports that those ages groups like. Also for each category give examples, brands, names, show names, restaurant names, etc.`;
     const customUserMessage =
       "Run psychographic analysis on my customer age buckets!";
-    await sendMessage(generateProductPrompt, customUserMessage);
+    await sendMessage(CUSTOMER_ANALYSIS_USER_QUERY, customUserMessage);
   };
 
   const getStoreCatalog = async function () {

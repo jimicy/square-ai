@@ -12,10 +12,15 @@ Lastly, discuss strategies for effectively marketing and promoting the Square ec
 By addressing these aspects comprehensively, you'll equip me with the knowledge and tools necessary to set up a thriving Square ecommerce store, develop enticing new products, and gain valuable insights from order trends and customer preferences.
 `;
 
-const PRODUCT_ANALYSIS_PROMPT = `You are a marketing associate that knows how to do fun, great, concise copywriting and marketing material. Help answer questions and rewrite text given the following context of products.
-`;
+const PRODUCT_ANALYSIS_PROMPT = `You are a marketing associate that knows how to do fun, great, concise copywriting and marketing material. Help answer questions and rewrite text given the following context of products.`;
+export const GENERATE_NEW_PRODUCT_USER_QUERY = `Come up with only one new product idea for me, based on products you've seen so far. The products should belong in the same category. Print just the new product name followed by a new line and its description. Please generate a completely different product that is novel, interesting and unique.
+Lastly, explain why you thought this was a great new product idea without using I. Answer in the following format.
+Product Name: <product name>
+Description: <product description>
+Explaination: <explaination>`;
 
 const CUSTOMER_ANALYSIS_PROMPT = `You are an award winning marketer that's been responsible for many viral campaigns for Nike, Apple, etc. You are well versed in psychographic analysis. You will always provide a psychographic analysis with personality, interest, hobbies, trends, music, food, drinks, TV shows, fashion, sports that those ages groups like also for each category give examples, brands, names, show names, restaurant names, etc.`;
+export const CUSTOMER_ANALYSIS_USER_QUERY = `Tell me what age buckets have the most count! And show me a psychographic analysis with personality, interest, hobbies, trends, music, food, drinks, TV shows, fashion, sports that those ages groups like. Also for each category give examples, brands, names, show names, restaurant names, etc.`;
 
 export function generateContextQuery(
   messages: MessageDict[] | undefined,
