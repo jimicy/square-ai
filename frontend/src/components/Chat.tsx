@@ -279,14 +279,13 @@ function SubscriptionItemsAnalysisMessage(props: { data: any }) {
       </Typography>
       <div style={{ marginBottom: 20 }}>
         <Typography paragraph>
-          Your subscriptions are sorted by numbers sold<br />
+          Your subscriptions with numbers sold<br />
           1. For each of them, count all the customers to figure out the most popular age bucket.<br />
           2. For the top subscription, for its customers we generate a demographic psychographic analysis on the top 3 customer age buckets.
         </Typography>
       </div>
       <TableContainer
         component={Paper}
-        className="popularProductsTable"
       >
         <Table aria-label="square store customers table">
           <TableHead>
@@ -307,7 +306,7 @@ function SubscriptionItemsAnalysisMessage(props: { data: any }) {
                   {popularItem.name}
                 </TableCell>
                 <TableCell align="right">{popularItem.total_quantity}</TableCell>
-                <TableCell align="right">{popularItem.popular_age_bucket.toString()}</TableCell>
+                <TableCell align="right">{'{' + popularItem.popular_age_bucket.toString().replaceAll(',', ': ') + '}'}</TableCell>
                 <TableCell align="right">{popularItem.plan_id}</TableCell>
               </TableRow>
             ))}
