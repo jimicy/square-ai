@@ -185,8 +185,8 @@ export function useAppState() {
       } else {
         addMessage({ text: userInput, type: "message", role: "user" });
       }
-      setWaitingForSystem(WaitingStates.GeneratingCode);
 
+      setWaitingForSystem(WaitingStates.GeneratingCode);
       const response = await fetch(`${API_ADDRESS}/generate`, {
         method: "POST",
         headers: {
@@ -199,7 +199,6 @@ export function useAppState() {
       });
       const data = await response.json();
       const text = data.text;
-
       setWaitingForSystem(WaitingStates.Idle);
 
       if (response.status === 200) {
@@ -225,6 +224,7 @@ export function useAppState() {
 
     const name = gptResponse.text.split("\n")[0];
 
+    setWaitingForSystem(WaitingStates.GeneratingCode);
     let response = await fetch(`${API_ADDRESS}/generate-product`, {
       method: "POST",
       headers: {
@@ -234,6 +234,8 @@ export function useAppState() {
         prompt: name,
       }),
     });
+    setWaitingForSystem(WaitingStates.Idle);
+
     let data = await response.json();
     for (const img of data) {
       addMessage({
@@ -256,9 +258,11 @@ export function useAppState() {
     if (document.hidden) {
       return;
     }
-
+    
+    setWaitingForSystem(WaitingStates.GeneratingCode);
     let response = await fetch(`${API_ADDRESS}/fetch-store-catalog`);
     let data = await response.json();
+    setWaitingForSystem(WaitingStates.Idle);
 
     addMessage({
       text: '',
@@ -273,9 +277,10 @@ export function useAppState() {
       return;
     }
 
+    setWaitingForSystem(WaitingStates.GeneratingCode);
     let response = await fetch(`${API_ADDRESS}/fetch-customers`);
     let data = await response.json();
-    console.log(data);
+    setWaitingForSystem(WaitingStates.Idle);
 
     addMessage({
       text: '',
@@ -289,9 +294,11 @@ export function useAppState() {
     if (document.hidden) {
         return;
       }
-  
+      
+      setWaitingForSystem(WaitingStates.GeneratingCode);
       let response = await fetch(`${API_ADDRESS}/popular-items-analysis`);
       let data = await response.json();
+      setWaitingForSystem(WaitingStates.Idle);
 
       console.log(data);
   

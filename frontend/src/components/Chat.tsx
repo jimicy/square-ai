@@ -208,7 +208,7 @@ function PopularItemsAnalysisMessage(props: { data: PopularItemAnalysis }) {
   return (
     <>
       <Typography variant="h5" className="heading">
-      Here is your Popular Items Analysis.
+      Here is your Popular Products Analysis.
       </Typography>
       <div style={{ marginBottom: 20 }}>
         <Typography paragraph>
@@ -255,8 +255,8 @@ function PopularItemsAnalysisMessage(props: { data: PopularItemAnalysis }) {
           </Typography>
         </Paper>
       <Typography paragraph>
-        You can now generate a new product that is inspired by your top 3 popular items
-        and their demographic's psychographic analysis.  <br />  
+        You can now generate a new product that is inspired by your top 3 popular products
+        and their demographic's psychographic analysis.  <br />
         We use ChatGPT and Stable Diffusion to generate a new product.
         </Typography>
         <Button
