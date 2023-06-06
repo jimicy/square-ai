@@ -18,10 +18,25 @@ export type MessageDict = {
     | "system"
     | "product-catalog"
     | "store-customers"
+    | "popular-items-analysis"
     | "image/png"
     | "image/jpeg";
   data?: any;
 };
+
+// Type definition for Popular Items Analysis type Item (Data passed to Chat).
+export interface PopularItemAnalysis {
+  most_popular_items:       PopularItem[];
+  top_three_items:          PopularItem[];
+  top_three_items_analysis: string;
+}
+export interface PopularItem {
+  catalog_object_id:  string;
+  name:               string;
+  popular_age_bucket: string;
+  total_quantity:     number;
+  total_sales:        number;
+}
 
 // Type definition for Catalog type Item (Data passed to Chat).
 export interface Item {

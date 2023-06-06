@@ -6,6 +6,7 @@ from googleapiclient.discovery import build
 import requests
 from square.client import Client
 import ai
+import popular_items_analysis
 
 from dateutil.relativedelta import relativedelta
 from datetime import date, datetime
@@ -188,3 +189,7 @@ def fetch_customers():
     'ageBuckets': age_buckets,
     'customers': response.body["customers"][:20]
   })
+
+@app.route('/api/popular-items-analysis', methods=['GET'])
+def api_popular_items_analysis():
+  return jsonify(popular_items_analysis.run_report())

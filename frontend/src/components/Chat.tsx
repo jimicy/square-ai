@@ -30,7 +30,7 @@ import {
   Legend,
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
-import { API_ADDRESS, Customer, MessageDict, PUBLIC_URL } from "../lib/type";
+import { API_ADDRESS, Customer, MessageDict, PUBLIC_URL, PopularItem, PopularItemAnalysis } from "../lib/type";
 
 ChartJS.register(
   CategoryScale,
@@ -204,6 +204,73 @@ function StoreCustomersMessage(props: {
   );
 }
 
+function PopularItemsAnalysisMessage(props: { data: PopularItemAnalysis }) {
+  return (
+    <>
+      <Typography variant="h5" className="heading">
+      Here is your Popular Items Analysis.
+      </Typography>
+      <div style={{ marginBottom: 20 }}>
+        <Typography paragraph>
+          Your products are sorted by numbers sold<br />
+          1. For each of them, count all the customers to figure out the most popular age bucket.<br />
+          2. For the top 3 products, for their age buckets we generate a psychographic analysis.
+        </Typography>
+      </div>
+      <TableContainer
+        component={Paper}
+        className="popularProductsTable"
+      >
+        <Table aria-label="square store customers table">
+          <TableHead>
+            <TableRow>
+              <TableCell>Name</TableCell>
+              <TableCell align="right">Most popular with ages&nbsp;</TableCell>
+              <TableCell align="right">Total number sold&nbsp;</TableCell>
+              <TableCell align="right">Total Sales&nbsp;</TableCell>
+              <TableCell align="right">Catalog id&nbsp;</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {props.data.most_popular_items.map((popularItem: PopularItem, index: number) => (
+              <TableRow
+                key={index}
+                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+              >
+                <TableCell component="th" scope="row">
+                  {popularItem.name}
+                </TableCell>
+                <TableCell align="right">{popularItem.popular_age_bucket}</TableCell>
+                <TableCell align="right">{popularItem.total_quantity}</TableCell>
+                <TableCell align="right">${popularItem.total_sales}</TableCell>
+                <TableCell align="right">{popularItem.catalog_object_id}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      <Paper style={{padding: 15, margin: 10}}>
+          <Typography paragraph style={{whiteSpace: 'pre-wrap'}}>
+            {props.data.top_three_items_analysis.replaceAll("\n\n", "\n")}
+          </Typography>
+        </Paper>
+      <Typography paragraph>
+        You can now generate a new product that is inspired by your top 3 popular items
+        and their demographic's psychographic analysis.  <br />  
+        We use ChatGPT and Stable Diffusion to generate a new product.
+        </Typography>
+        <Button
+          className="generateProduct"
+          variant="contained"
+          onClick={() => {}}
+          style={{ width: 300, marginBottom: 15 }}
+        >
+          Generate a new product
+        </Button>
+    </>
+  );
+}
+
 function Message(props: {
   text: MessageDict["text"];
   role: MessageDict["role"];
@@ -346,7 +413,9 @@ function Message(props: {
               dangerouslySetInnerHTML={{ __html: text }}
             ></div>
           ))}
-
+        {props.type === "popular-items-analysis" && props.data && (
+          <PopularItemsAnalysisMessage data={props.data} />
+        )}
         {props.type === "image/png" && (
           <>
             <Typography variant="h2" className="heading heading2">

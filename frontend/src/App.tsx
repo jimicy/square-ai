@@ -19,6 +19,7 @@ function App() {
     runCustomerAnalysis,
     getStoreCatalog,
     getStoreCustomers,
+    getPopularItemsAnalysis,
   } = useAppState();
 
   const chatScrollRef = React.useRef<HTMLDivElement>(null);
@@ -53,6 +54,7 @@ function App() {
               selectedLocale={selectedLocale}
               getStoreCatalog={getStoreCatalog}
               getStoreCustomers={getStoreCustomers}
+              getPopularItemsAnalysis={getPopularItemsAnalysis}
             />
           )}
         </div>

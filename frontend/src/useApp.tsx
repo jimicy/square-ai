@@ -261,7 +261,7 @@ export function useAppState() {
     let data = await response.json();
 
     addMessage({
-      text: `Here are some of the products from your store catalog!`,
+      text: '',
       type: "product-catalog",
       role: "system",
       data: data,
@@ -278,12 +278,30 @@ export function useAppState() {
     console.log(data);
 
     addMessage({
-      text: `Here are some of the products from your store catalog!`,
+      text: '',
       type: "store-customers",
       role: "system",
       data: data,
     });
   };
+
+  const getPopularItemsAnalysis = async function () {
+    if (document.hidden) {
+        return;
+      }
+  
+      let response = await fetch(`${API_ADDRESS}/popular-items-analysis`);
+      let data = await response.json();
+
+      console.log(data);
+  
+      addMessage({
+        text: '',
+        type: "popular-items-analysis",
+        role: "system",
+        data: data,
+      });
+  }
 
   return {
     selectedLocale,
@@ -298,6 +316,7 @@ export function useAppState() {
     runCustomerAnalysis,
     getStoreCatalog,
     getStoreCustomers,
+    getPopularItemsAnalysis,
     onShipCalculatorPage,
     setOnShipCalculatorPage,
   };
