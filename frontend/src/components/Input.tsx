@@ -94,25 +94,13 @@ export default function Input(props: {
         />
         <Chip
           className="suggestionChip"
-          label="Get store orders"
-          variant="outlined"
-          onClick={() => {}}
-          style={{
-            position: "absolute",
-            top: -25,
-            left: 320,
-            background: "lightyellow",
-          }}
-        />
-        <Chip
-          className="suggestionChip"
           label="Get store customers"
           variant="outlined"
           onClick={props.getStoreCustomers}
           style={{
             position: "absolute",
             top: -25,
-            left: 450,
+            left: 320,
             background: "lightyellow",
           }}
         />
@@ -124,7 +112,7 @@ export default function Input(props: {
           style={{
             position: "absolute",
             top: -25,
-            left: 600,
+            left: 470,
             background: "lightyellow",
           }}
         />
