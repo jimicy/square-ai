@@ -219,7 +219,7 @@ export function useAppState() {
       customUserMessage
     );
 
-    const name = gptResponse.text.split("\n")[0].replace("Product name: ", "");
+    const name = gptResponse.text.split("\n")[0].replace("Product Name: ", "");
 
     setWaitingForSystem(WaitingStates.GeneratingCode);
     let response = await fetch(`${API_ADDRESS}/generate-product`, {

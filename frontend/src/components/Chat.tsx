@@ -204,7 +204,7 @@ function StoreCustomersMessage(props: {
   );
 }
 
-function PopularItemsAnalysisMessage(props: { data: PopularItemAnalysis }) {
+function PopularItemsAnalysisMessage(props: { data: PopularItemAnalysis, generateProduct: () => void }) {
   return (
     <>
       <Typography variant="h5" className="heading">
@@ -262,7 +262,7 @@ function PopularItemsAnalysisMessage(props: { data: PopularItemAnalysis }) {
         <Button
           className="generateProduct"
           variant="contained"
-          onClick={() => {}}
+          onClick={props.generateProduct}
           style={{ width: 300, marginBottom: 15 }}
         >
           Generate a new product
@@ -413,8 +413,8 @@ function Message(props: {
               dangerouslySetInnerHTML={{ __html: text }}
             ></div>
           ))}
-        {props.type === "popular-items-analysis" && props.data && (
-          <PopularItemsAnalysisMessage data={props.data} />
+        {props.type === "popular-items-analysis" && props.data && props.generateProduct && (
+          <PopularItemsAnalysisMessage data={props.data} generateProduct={props.generateProduct}/>
         )}
         {props.type === "image/png" && (
           <>

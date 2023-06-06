@@ -79,6 +79,13 @@ export function generateContextQuery(
       role: "system",
       content: CUSTOMER_ANALYSIS_PROMPT + "\n" + context,
     });
+  } else if (recentSystemMessage && recentSystemMessage.type === "popular-items-analysis") {
+    let context = "Use this store's popular products and target age bucket demographic psychographic analysis to inform coming up with a new product idea. Do not say this back to me.\n";
+
+    gptMessages.push({
+      role: "user",
+      content: context,
+    });
   } else {
     gptMessages.push({
       role: "system",
