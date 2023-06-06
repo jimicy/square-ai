@@ -134,7 +134,7 @@ function StoreCustomersMessage(props: {
         onClick={props.runCustomerAnalysis}
         style={{ width: 300, marginBottom: 15 }}
       >
-        Run Customer Analysis
+        Run psychographic analysis
       </Button>
       <div
         className="chart-container"
@@ -353,7 +353,7 @@ function Message(props: {
               Generated Image for: {props.data.name}
             </Typography>
             <Typography variant="body2" color="text.secondary">
-              Generated using Stable Diffusion V2.1
+              Generated using Stable Diffusion 2.2 XL
             </Typography>
             <div
               className="cell-output-image generatedImg"

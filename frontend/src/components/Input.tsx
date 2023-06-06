@@ -114,6 +114,18 @@ export default function Input(props: {
             background: "lightyellow",
           }}
         />
+        <Chip
+          className="suggestionChip"
+          label="Get store subscriptions"
+          variant="outlined"
+          onClick={() => {}}
+          style={{
+            position: "absolute",
+            top: -25,
+            left: 590,
+            background: "lightyellow",
+          }}
+        />
         <div className={"input-holder " + (inputIsFocused ? "focused" : "")}>
           <button className="send voice" onClick={handleVoiceInput}>
             {!listeningToVoice && <KeyboardVoiceIcon />}

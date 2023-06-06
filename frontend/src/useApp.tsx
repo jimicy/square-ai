@@ -247,7 +247,8 @@ export function useAppState() {
 
   const runCustomerAnalysis = async () => {
     const generateProductPrompt = `Tell me what age buckets have the most count! And show me a psychographic analysis with personality, interest, hobbies, trends, music, food, drinks, TV shows, fashion, sports that those ages groups like. Also for each category give examples, brands, names, show names, restaurant names, etc.`;
-    const customUserMessage = "Run customer analysis!";
+    const customUserMessage =
+      "Run psychographic analysis on my customer age buckets!";
     await sendMessage(generateProductPrompt, customUserMessage);
   };
 

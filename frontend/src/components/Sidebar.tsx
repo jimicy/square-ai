@@ -28,7 +28,7 @@ export default function Sidebar(props: {
           >
             Connect Square Store
           </Button>
-          {!props.onShipCalculatorPage && (
+          {/* {!props.onShipCalculatorPage && (
             <Button
               className="rateCalculator"
               variant="contained"
@@ -46,7 +46,7 @@ export default function Sidebar(props: {
             >
               Chat AI
             </Button>
-          )}
+          )} */}
           <label>Languages</label>
           <select
             value={props.selectedLocale}
