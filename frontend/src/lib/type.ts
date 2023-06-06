@@ -19,6 +19,7 @@ export type MessageDict = {
     | "product-catalog"
     | "store-customers"
     | "popular-items-analysis"
+    | "store-subscriptions-analysis"
     | "image/png"
     | "image/jpeg";
   data?: any;

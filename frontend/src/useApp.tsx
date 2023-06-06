@@ -304,6 +304,24 @@ export function useAppState() {
       });
   }
 
+  const getSubscriptionAnalysis = async function () {
+    if (document.hidden) {
+        return;
+      }
+      
+      setWaitingForSystem(WaitingStates.GeneratingCode);
+      let response = await fetch(`${API_ADDRESS}/store-subscriptions-analysis`);
+      let data = await response.json();
+      setWaitingForSystem(WaitingStates.Idle);
+  
+      addMessage({
+        text: '',
+        type: "store-subscriptions-analysis",
+        role: "system",
+        data: data,
+      });
+  }
+
   return {
     selectedLocale,
     setSelectedLocale,
@@ -318,5 +336,6 @@ export function useAppState() {
     getStoreCatalog,
     getStoreCustomers,
     getPopularItemsAnalysis,
+    getSubscriptionAnalysis,
   };
 }

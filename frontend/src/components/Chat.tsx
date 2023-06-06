@@ -271,6 +271,58 @@ function PopularItemsAnalysisMessage(props: { data: PopularItemAnalysis, generat
   );
 }
 
+function SubscriptionItemsAnalysisMessage(props: { data: any }) {
+  return (
+    <>
+      <Typography variant="h5" className="heading">
+      Here is your Subscription Products Analysis.
+      </Typography>
+      <div style={{ marginBottom: 20 }}>
+        <Typography paragraph>
+          Your subscriptions are sorted by numbers sold<br />
+          1. For each of them, count all the customers to figure out the most popular age bucket.<br />
+          2. For the top subscription, for its customers we generate a demographic psychographic analysis on the top 3 customer age buckets.
+        </Typography>
+      </div>
+      <TableContainer
+        component={Paper}
+        className="popularProductsTable"
+      >
+        <Table aria-label="square store customers table">
+          <TableHead>
+            <TableRow>
+              <TableCell>Name</TableCell>
+              <TableCell align="right">Total numbers sold&nbsp;</TableCell>
+              <TableCell align="right">Age buckets&nbsp;</TableCell>
+              <TableCell align="right">Plan ID&nbsp;</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {props.data.most_popular_items.map((popularItem: any, index: number) => (
+              <TableRow
+                key={index}
+                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+              >
+                <TableCell component="th" scope="row">
+                  {popularItem.name}
+                </TableCell>
+                <TableCell align="right">{popularItem.total_quantity}</TableCell>
+                <TableCell align="right">{popularItem.popular_age_bucket.toString()}</TableCell>
+                <TableCell align="right">{popularItem.plan_id}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      <Paper style={{padding: 15, margin: 10}}>
+          <Typography paragraph style={{whiteSpace: 'pre-wrap'}}>
+            {props.data.top_three_items_analysis.replaceAll("\n\n", "\n")}
+          </Typography>
+        </Paper>
+    </>
+  );
+}
+
 function Message(props: {
   text: MessageDict["text"];
   role: MessageDict["role"];
@@ -413,6 +465,9 @@ function Message(props: {
               dangerouslySetInnerHTML={{ __html: text }}
             ></div>
           ))}
+        {props.type === "store-subscriptions-analysis" && props.data && (
+          <SubscriptionItemsAnalysisMessage data={props.data} />
+        )}
         {props.type === "popular-items-analysis" && props.data && props.generateProduct && (
           <PopularItemsAnalysisMessage data={props.data} generateProduct={props.generateProduct}/>
         )}

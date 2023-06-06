@@ -7,6 +7,7 @@ import requests
 from square.client import Client
 import ai
 import popular_items_analysis
+import subscription_analysis
 
 from dateutil.relativedelta import relativedelta
 from datetime import date, datetime
@@ -184,3 +185,7 @@ def fetch_customers():
 @app.route('/api/popular-items-analysis', methods=['GET'])
 def api_popular_items_analysis():
   return jsonify(popular_items_analysis.run_report())
+
+@app.route('/api/store-subscriptions-analysis', methods=['GET'])
+def square_subscriptions_analysis():
+  return jsonify(subscription_analysis.run_report())

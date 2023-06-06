@@ -12,6 +12,7 @@ export default function Input(props: {
   getStoreCatalog: () => void;
   getStoreCustomers: () => void;
   getPopularItemsAnalysis: () => void;
+  getSubscriptionAnalysis: () => void;
 }) {
   let [inputIsFocused, setInputIsFocused] = useState<boolean>(false);
   let [userInput, setUserInput] = useState<string>("");
@@ -119,7 +120,7 @@ export default function Input(props: {
           className="suggestionChip"
           label="Get store subscriptions"
           variant="outlined"
-          onClick={() => {}}
+          onClick={props.getSubscriptionAnalysis}
           style={{
             position: "absolute",
             top: -25,
