@@ -214,7 +214,7 @@ function PopularItemsAnalysisMessage(props: { data: PopularItemAnalysis }) {
         <Typography paragraph>
           Your products are sorted by numbers sold<br />
           1. For each of them, count all the customers to figure out the most popular age bucket.<br />
-          2. For the top 3 products, for their age buckets we generate a psychographic analysis.
+          2. For the top 3 products and their popular age buckets we generate a demographic psychographic analysis.
         </Typography>
       </div>
       <TableContainer

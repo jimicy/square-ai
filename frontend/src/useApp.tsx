@@ -299,8 +299,6 @@ export function useAppState() {
       let response = await fetch(`${API_ADDRESS}/popular-items-analysis`);
       let data = await response.json();
       setWaitingForSystem(WaitingStates.Idle);
-
-      console.log(data);
   
       addMessage({
         text: '',

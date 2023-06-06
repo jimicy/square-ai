@@ -151,8 +151,8 @@ def run_report():
     popular_item.popular_age_bucket = get_top_age_bucket(popular_item.customer_ids, customer_id_to_customer)
 
   # Run psychoanalysis on the top three most popular items's most popular age bucket
-  top_three_age_buckets = [p.popular_age_bucket for p in most_popular_items[:3]]
-  query1 = "My most popular customers fall into these age buckets and ranges: " + ", ".join(top_three_age_buckets)
+  top_three_age_buckets = [p.popular_age_bucket for p in set(most_popular_items[:3])]
+  query1 = "My most popular customers fall into these age buckets: " + ", ".join(list(set(top_three_age_buckets)))
   query2 = "For each of my age buckets show me a psychographic analysis with personality, interest, hobbies, trends, music, food, drinks, TV shows, fashion, sports that those ages groups like. Also for each category give examples, brands, names, show names, restaurant names, etc."
 
   messages = [
