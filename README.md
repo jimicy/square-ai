@@ -19,3 +19,6 @@ Demo: https://square-ai.onrender.com/
   + Aggreate your subscriptions with numbers sold
   + For each of them, count all the customers to figure out the most popular age bucket.
   + For the top subscription, for its customers we generate a demographic psychographic analysis on the top 3 customer age buckets.
+
+At any point in the chat bubble you can ask ChatGPT questions and it will know the context of the conversation so far.
+Example: What's the description of "Jasmine Milk Tea"? Can you rewrite that to be more appealing to a genz audience.
